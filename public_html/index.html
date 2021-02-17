@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en">
+    <head>
+        <title>Registration From</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+
+    </head>
+    <body>
+        <form>
+            <div class="container">
+                <h2>Registration Form</h2>
+                <form id="regForm" method="post">
+                    <div class="form-group">
+                        <label for="name"><strong>Name:</strong></label>
+                        <input type="text" class="form-control" id="name"
+                               placeholder="Enter Name" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><strong>Email:</strong></label>
+                        <input type="email" class="form-control" id="email"
+                               placeholder="Enter Email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="dob"><strong>DOB:</strong></label>
+                        <input type="date" type="number" size="35"  class="form-control" id="dob"
+                               name="dob">
+                    </div>
+                    <div class="form-group">
+                        <label for="sex"><strong>Sex:</strong></label>
+                        <input type="radio" name="gender" value="male" size="35" class="form-control" id="sex">Male
+                        <input type="radio" name="gender" value="female" size="35"  class="form-control" id="sex">Female
+                    </div>
+                    <div class="form-group">
+                        <label for="addr"><strong>Address:</strong></label>
+                        <input type="text" class="form-control" id="addr"
+                               placeholder="Enter Address" name="addr">
+                    </div>
+                    <div class="form-group">
+                        <label for="number"><strong>Mobile No:</strong></label>
+                        <input type="text" class="form-control" id="number"
+                               placeholder="Enter Mobile No." name="number">
+                    </div>
+
+
+
+
+                    <input type="button" class="btn btn-primary" id="empSave" value="Save"
+                           onclick="saveForm();">
+
+                    </div>
+                    <script>
+                        $("#name").focus();
+
+                        function validateAndGetFormData()
+                        {
+                            var nameVar = $("#name").val();
+                            if (nameVar === "") {
+                                alert("Name is Required");
+                                $("#name").focus();
+                                return "";
+                            }
+
+                            var emailVar = $("#email").val();
+                            if (emailVar === "") {
+                                alert("Email is Required");
+                                $("#email").focus();
+                                return "";
+                            }
+                            var dobVar = $("#dob").val();
+                            if (dobVar === "") {
+                                alert("Select DOB");
+                                $("#dob").focus();
+                                return "";
+                            }
+                            var sexVar = $("#sex").val();
+                            if (sexVar === "") {
+                                alert("Select Gender");
+                                $("#sex").focus();
+                                return "";
+                            }
+                            var addrVar = $("#addr").val();
+                            if (addrVar === "") {
+                                alert("Address is Required");
+                                $("#addr").focus();
+                                return "";
+                            }
+                            var numberVar = $("#number").val();
+                            if (numberVar === "") {
+                                alert("Mobile No. is Required");
+                                $("#number").focus();
+                                return "";
+                            }
+                            var jsonStrObj = {
+                                name: nameVar,
+                                email: emailVar,
+                                dob: dobVar,
+                                sex: sexVar,
+                                addr: addrVar,
+                                number: numberVar,
+                            };
+                            return JSON.stringify(jsonStrObj);
+                        }
+                        
+                        function resetForm() {
+
+                            $("#name").val("");
+                            $("#email").val("");
+                            $("#dob").val("");
+                            $("#sex").val("");
+                            $("#addr").val("");
+                            $("#number").val("");
+                            $("name").focus();
+                        }
+                        function saveForm() {
+                            var jsonStr = validateAndGetFormData();
+                            if (jsonStr === "") {
+                                return;
+                            }
+                            var putReqStr = createPUTRequest("90935388|-31948797643810955|90932195",
+                                    jsonStr, "Reg-Form", "Form-Rel");
+                            alert(putReqStr);
+                            jQuery.ajaxSetup({async: false});
+                            var resultObj = executeCommandAtGivenBaseUrl(putReqStr,
+                                    "http://api.login2explore.com:5577", "/api/iml");
+                            alert(JSON.stringify(resultObj));
+                            jQuery.ajaxSetup({async: true});
+                            resetForm();
+                        }
+                    </script>
+                </form>
+                </body>
+                </html>
