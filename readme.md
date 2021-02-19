@@ -27,3 +27,6 @@ Easy and fast to develop database applications without using any server side pro
 # ScreenShots:
 ![](sonPowerDBHome.png)
 ![](RegistrationFrom.png)
+
+# Important Info
+Read into imp.md file
